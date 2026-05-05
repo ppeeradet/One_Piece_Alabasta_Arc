@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>☀️ ONE PIECE คณิตผจญภัย อลาบาสตา</title>
+<style>
+:root{
+  --sand:#e8c47a;--sand2:#f5dfa0;--deep:#1a0800;--desert:#8b4513;
+  --sky:#1a6b9a;--teal:#00b4a0;--gold:#f4a017;--gold2:#ffd36e;
+  --red:#e63946;--ivory:#fdf6e3;--dusk:#2d1b4e;
+  --card:rgba(255,255,255,0.07);--radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--deep);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;}
+
+/* ── BG ── */
+.bg{position:fixed;inset:0;z-index:0;
+  background:linear-gradient(180deg,#060d1a 0%,#0d2040 30%,#3a1a00 65%,#1a0800 100%);}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.9}}
+.dune{position:absolute;bottom:0;width:200%;opacity:.65;}
+.d1{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 80'%3E%3Cpath d='M0 50Q100 10 200 50Q300 90 400 50Q500 10 600 50Q700 90 800 50L800 80L0 80Z' fill='%23c47a2a'/%3E%3C/svg%3E") repeat-x;
+  background-size:800px;animation:drift 12s linear infinite;}
+.d2{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 60'%3E%3Cpath d='M0 40Q75 15 150 40Q225 65 300 40Q375 15 450 40Q525 65 600 40L600 60L0 60Z' fill='%23a0611a'/%3E%3C/svg%3E") repeat-x;
+  background-size:600px;animation:drift 8s linear infinite reverse;bottom:-5px;}
+@keyframes drift{to{transform:translateX(-600px)}}
+.sun{position:fixed;top:30px;right:40px;width:60px;height:60px;border-radius:50%;
+  background:radial-gradient(circle,#ffe066 0%,#f4a017 60%,rgba(244,160,23,0) 100%);
+  box-shadow:0 0 40px 10px rgba(244,160,23,.35);animation:sun-pulse 4s ease-in-out infinite;z-index:1;}
+@keyframes sun-pulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.12);opacity:1}}
+
+/* ── SCREENS ── */
+.sc{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;overflow:hidden;}
+.sc.on{display:flex;}
+
+/* ── WELCOME ── */
+#sw{align-items:center;justify-content:center;gap:0;}
+.logo-wrap{text-align:center;padding:12px 0 4px;}
+.logo{font-size:clamp(2rem,6.5vw,3.2rem);font-weight:900;color:var(--sand2);
+  text-shadow:0 0 24px rgba(244,160,23,.9),3px 3px 0 #5a2d00;
+  letter-spacing:1px;line-height:1.2;animation:glow 2s ease-in-out infinite;}
+@keyframes glow{0%,100%{text-shadow:0 0 24px rgba(244,160,23,.9),3px 3px 0 #5a2d00}
+  50%{text-shadow:0 0 42px rgba(255,220,100,1),3px 3px 0 #5a2d00}}
+.logo-sub{color:#7ecef4;font-size:clamp(.9rem,2.5vw,1.15rem);margin:7px 0 0;letter-spacing:1.5px;}
+.logo-arc{color:var(--sand);font-size:clamp(.85rem,2.2vw,1rem);margin:3px 0 0;opacity:.8;}
+.ship-deco{font-size:3.8rem;animation:bob 3s ease-in-out infinite;margin:10px 0;}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
+
+.wcard{background:rgba(26,8,0,.82);border:2px solid rgba(232,196,122,.45);
+  border-radius:20px;padding:24px 28px;width:min(380px,92vw);
+  backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(0,0,0,.6);}
+.wcard label{color:#c8a85a;font-size:1rem;display:block;margin-bottom:7px;font-weight:600;}
+#inp{width:100%;padding:13px 16px;border-radius:10px;border:1.5px solid rgba(232,196,122,.35);
+  background:rgba(232,196,122,.1);color:#f5dfa0;font-size:1.1rem;outline:none;margin-bottom:14px;
+  transition:border-color .2s;}
+#inp:focus{border-color:var(--sand);}
+.btn-p{width:100%;padding:15px;border-radius:12px;border:none;cursor:pointer;
+  font-size:1.1rem;font-weight:700;
+  background:linear-gradient(135deg,#c47a2a,#e8a840);color:#1a0800;
+  box-shadow:0 4px 15px rgba(196,122,42,.5);transition:all .2s;margin-bottom:9px;}
+.btn-p:active{transform:scale(.97);}
+.btn-p2{width:100%;padding:14px;border-radius:12px;border:none;cursor:pointer;
+  font-size:1.05rem;font-weight:700;
+  background:linear-gradient(135deg,#1aa67a,#15806b);color:#fff;
+  box-shadow:0 4px 15px rgba(26,166,122,.5);transition:all .2s;margin-bottom:9px;display:none;}
+.btn-p2:active{transform:scale(.97);}
+.btn-s{width:100%;padding:12px;border-radius:12px;border:1.5px solid rgba(232,196,122,.35);
+  background:rgba(232,196,122,.08);color:var(--sand2);font-size:.95rem;cursor:pointer;transition:all .2s;}
+.btn-s:active{transform:scale(.97);}
+
+/* ── MAP ── */
+.mhdr{display:flex;align-items:center;gap:6px;padding:10px 12px;
+  background:rgba(26,8,0,.75);border-bottom:1px solid rgba(232,196,122,.2);flex-shrink:0;}
+.mhdr-title{flex:1;color:var(--sand);font-weight:700;font-size:1.05rem;text-align:center;}
+.mhdr-player{color:#7ecef4;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;}
+.bk{padding:6px 11px;background:rgba(232,196,122,.1);border:1px solid rgba(232,196,122,.25);
+  border-radius:8px;color:var(--sand2);font-size:.85rem;cursor:pointer;white-space:nowrap;}
+.mu{background:rgba(232,196,122,.1);border:1px solid rgba(232,196,122,.25);
+  border-radius:8px;padding:5px 9px;cursor:pointer;font-size:1.1rem;}
+.map-list{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:10px;}
+.map-btn{display:flex;align-items:center;gap:12px;padding:16px;
+  border-radius:14px;border:1.5px solid rgba(232,196,122,.2);
+  background:rgba(26,8,0,.5);cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.map-btn:not(.locked):active{transform:scale(.98);}
+.map-btn.done{border-color:rgba(0,180,160,.5);background:rgba(0,180,160,.08);}
+.map-btn.locked{opacity:.45;pointer-events:none;}
+.map-ico{font-size:2.2rem;width:48px;text-align:center;flex-shrink:0;}
+.map-info{flex:1;}
+.map-name{color:var(--sand2);font-weight:700;font-size:1rem;}
+.map-sub{color:#9a7a4a;font-size:.78rem;margin-top:3px;}
+.map-right{text-align:right;flex-shrink:0;}
+.map-diff{font-size:.78rem;color:var(--sand);}
+.map-stars{font-size:.95rem;margin-top:3px;}
+.map-best{font-size:.72rem;color:var(--teal);margin-top:2px;}
+
+/* ── STORY ── */
+.shdr{display:flex;align-items:center;gap:8px;padding:10px 12px;
+  background:rgba(26,8,0,.75);border-bottom:1px solid rgba(232,196,122,.2);flex-shrink:0;}
+.story-wrap{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
+.story-icon{font-size:3.8rem;text-align:center;}
+.story-title{color:var(--sand);font-size:clamp(1.15rem,3.5vw,1.55rem);font-weight:900;
+  text-align:center;text-shadow:0 0 15px rgba(232,196,122,.6);}
+.story-body{color:#d4b870;font-size:clamp(.95rem,2.6vw,1.08rem);line-height:1.9;
+  background:rgba(26,8,0,.55);border-radius:12px;padding:16px;
+  border:1px solid rgba(232,196,122,.18);}
+.story-body strong{color:var(--sand2);}
+.btn-mission{padding:15px 36px;border-radius:14px;border:none;cursor:pointer;
+  font-size:1.1rem;font-weight:700;
+  background:linear-gradient(135deg,#c63c1a,#e85020);color:#fff;
+  box-shadow:0 4px 15px rgba(198,60,26,.5);align-self:center;margin:8px 0;
+  animation:mission-pulse 2s ease-in-out infinite;}
+@keyframes mission-pulse{0%,100%{box-shadow:0 4px 15px rgba(198,60,26,.5)}50%{box-shadow:0 4px 30px rgba(232,80,32,.8)}}
+
+/* ── GAME ── */
+.ghdr{display:flex;align-items:flex-start;justify-content:space-between;
+  padding:9px 13px;background:rgba(26,8,0,.8);
+  border-bottom:1px solid rgba(232,196,122,.18);flex-shrink:0;}
+.g-hearts{font-size:1.2rem;}
+.g-qcount{color:#9a7a4a;font-size:.78rem;margin-top:2px;}
+.g-ch{color:var(--sand);font-weight:700;font-size:.92rem;text-align:center;}
+.g-score{color:var(--sand2);font-weight:700;font-size:1rem;text-align:right;}
+.g-score-sub{color:#7ecef4;font-size:.72rem;text-align:right;margin-top:2px;}
+.g-btns{display:flex;gap:5px;margin-top:4px;justify-content:flex-end;}
+.prog{height:4px;background:rgba(232,196,122,.15);flex-shrink:0;}
+.prog-fill{height:100%;background:linear-gradient(90deg,#c47a2a,var(--sand));transition:width .4s;}
+.q-area{padding:11px 13px 7px;flex-shrink:0;}
+.q-text{color:#f5dfa0;font-size:clamp(1.05rem,3.2vw,1.22rem);line-height:1.75;font-weight:600;
+  background:rgba(26,8,0,.55);border-radius:12px;padding:14px 16px;
+  border:1px solid rgba(232,196,122,.22);}
+
+/* ── SOLUTION BOX ── */
+#solBox{display:none;margin:7px 0 0;padding:11px 14px;
+  background:rgba(0,50,40,.88);border:1.5px solid rgba(0,180,160,.4);
+  border-radius:10px;font-size:.85rem;color:#a8f0e8;line-height:1.75;}
+#solBox.show{display:block;}
+#solBox .sol-title{color:var(--sand);font-weight:700;font-size:.92rem;margin-bottom:5px;}
+#solBox .sol-step{font-family:monospace;font-size:.88rem;color:#7ef5e8;white-space:pre-wrap;}
+#solBox .sol-ans{color:#7effa0;font-weight:700;margin-top:5px;font-size:.92rem;}
+
+/* ── FEEDBACK ── */
+#fb{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+  pointer-events:none;opacity:0;transition:opacity .2s;}
+#fb.on{opacity:1;}
+.fb-ico{font-size:5.5rem;animation:pop .4s ease-out;}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.3)}100%{transform:scale(1)}}
+
+/* ── SCRATCH ── */
+.scratch-zone{flex:1;min-height:0;display:flex;flex-direction:column;padding:6px 12px;}
+.scratch-bar{display:flex;align-items:center;gap:6px;padding:0 2px;margin-bottom:5px;flex-shrink:0;flex-wrap:nowrap;}
+.scratch-lbl{color:#9a7a4a;font-size:.75rem;white-space:nowrap;flex-shrink:0;}
+.cb{width:22px;height:22px;border-radius:50%;border:2.5px solid transparent;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.cb.on{border-color:var(--sand);transform:scale(1.25);}
+.clr-btn{padding:4px 10px;background:rgba(232,196,122,.1);
+  border:1px solid rgba(232,196,122,.25);border-radius:6px;color:#c8a85a;font-size:.78rem;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.clr-btn.on{background:rgba(0,180,160,.25);border-color:rgba(0,180,160,.8);color:#7ef5e8;}
+.clr-btns{margin-left:auto;display:flex;gap:5px;flex-shrink:0;}
+#scratch{flex:1;min-height:0;
+  background:rgba(232,196,122,.05);border:1.5px dashed rgba(232,196,122,.22);
+  border-radius:10px;cursor:crosshair;touch-action:none;display:block;width:100%;}
+
+/* ── ANSWERS ── */
+.ans-area{padding:7px 12px 11px;flex-shrink:0;}
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px;}
+.ch-btn{padding:15px 8px;border-radius:12px;
+  background:rgba(26,8,0,.6);border:1.5px solid rgba(232,196,122,.25);
+  color:#f5dfa0;font-size:clamp(1rem,3vw,1.15rem);font-weight:700;
+  cursor:pointer;transition:all .15s;text-align:center;}
+.ch-btn:active{transform:scale(.97);}
+.ch-btn.sel{background:rgba(196,122,42,.32);border-color:var(--sand);color:var(--sand2);}
+.ch-btn.cor{background:rgba(0,180,160,.32);border-color:var(--teal);color:#7ef5e8;}
+.ch-btn.wrg{background:rgba(230,57,70,.22);border-color:var(--red);color:#f08090;}
+.cfm-btn{width:100%;padding:14px;border-radius:12px;border:none;cursor:pointer;
+  font-size:1.05rem;font-weight:700;
+  background:linear-gradient(135deg,#c47a2a,#e8a840);color:#1a0800;
+  opacity:.35;transition:all .2s;pointer-events:none;}
+.cfm-btn:not([disabled]){opacity:1;pointer-events:auto;}
+.cfm-btn:active{transform:scale(.98);}
+.next-btn{width:100%;padding:14px;border-radius:12px;border:none;cursor:pointer;
+  font-size:1.05rem;font-weight:700;
+  background:linear-gradient(135deg,#1a7ac4,#1a9ae8);color:#fff;
+  box-shadow:0 4px 15px rgba(26,122,196,.4);transition:all .2s;}
+.next-btn:active{transform:scale(.98);}
+
+/* ── CHAPTER COMPLETE ── */
+#scc{align-items:center;justify-content:center;}
+.cc-card{background:rgba(26,8,0,.85);border:2.5px solid rgba(232,196,122,.5);
+  border-radius:22px;padding:30px 26px;width:min(370px,92vw);text-align:center;
+  box-shadow:0 0 50px rgba(196,122,42,.3);}
+.cc-title{color:var(--sand);font-size:1.8rem;font-weight:900;margin-bottom:6px;}
+.cc-stars{font-size:2rem;margin:10px 0;letter-spacing:4px;}
+.cc-score{color:var(--sand2);font-size:1.15rem;font-weight:700;margin:8px 0;}
+.cc-score span{color:var(--teal);font-size:1.55rem;}
+.cc-msg{color:#9a7a4a;font-size:.92rem;margin-bottom:18px;line-height:1.6;}
+
+/* ── VICTORY ── */
+#sv{align-items:center;justify-content:center;}
+.vic-card{background:rgba(26,8,0,.9);border:2.5px solid rgba(232,196,122,.55);
+  border-radius:22px;padding:34px 26px;width:min(370px,92vw);text-align:center;
+  box-shadow:0 0 60px rgba(196,122,42,.4);}
+.vic-ico{font-size:4.2rem;animation:bob 2s ease-in-out infinite;margin-bottom:10px;}
+.vic-title{color:var(--sand);font-size:clamp(1.5rem,5vw,2.1rem);font-weight:900;margin-bottom:6px;}
+.vic-sub{color:#7ecef4;font-size:1rem;margin-bottom:14px;}
+.vic-score{color:var(--sand2);font-size:1.2rem;font-weight:700;margin-bottom:22px;}
+
+/* ── LEADERBOARD ── */
+#slb{overflow:hidden;}
+.lb-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;
+  background:rgba(26,8,0,.8);border-bottom:1px solid rgba(232,196,122,.2);flex-shrink:0;}
+.lb-hdr-t{flex:1;color:var(--sand);font-weight:700;font-size:1.05rem;text-align:center;}
+.lb-body{flex:1;overflow-y:auto;padding:10px 12px;}
+.lb-row{display:flex;align-items:center;gap:8px;padding:11px 13px;
+  background:rgba(26,8,0,.55);border-radius:11px;margin-bottom:7px;
+  border:1px solid rgba(232,196,122,.13);}
+.lb-row.me{background:rgba(196,122,42,.22);border-color:rgba(232,196,122,.5);}
+.lb-rank{font-size:1.15rem;width:36px;text-align:center;flex-shrink:0;}
+.lb-name{flex:1;color:#f5dfa0;font-size:.9rem;font-weight:600;}
+.lb-sc{color:var(--teal);font-weight:700;font-size:.92rem;white-space:nowrap;}
+.lb-dt{color:#6a5a3a;font-size:.73rem;white-space:nowrap;}
+.lb-empty{text-align:center;color:#6a5a3a;padding:36px 16px;font-size:.95rem;line-height:1.9;}
+
+/* ── MISC ── */
+.ptcl{position:fixed;font-size:1.6rem;z-index:100;pointer-events:none;
+  animation:fly 1s ease-out forwards;}
+@keyframes fly{0%{transform:translateY(0) scale(1);opacity:1}
+  100%{transform:translateY(-90px) scale(.4);opacity:0}}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(232,196,122,.3);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg">
+  <div id="stars"></div>
+  <div class="dune d1"></div>
+  <div class="dune d2"></div>
+</div>
+<div class="sun"></div>
+
+<!-- WELCOME -->
+<div class="sc" id="sw">
+  <div class="logo-wrap">
+    <div class="ship-deco">☀️ 🏜️ 🦅</div>
+    <div class="logo">ONE PIECE<br>คณิตผจญภัย</div>
+    <div class="logo-sub">ภาค อลาบาสตา · Alabasta Arc</div>
+    <div class="logo-arc">บวก ลบ 3-6 หลัก · คูณหาร 2 หลัก · โจทย์หลายขั้นตอน</div>
+  </div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 16px;">
+    <div class="wcard">
+      <label>⚔️ ชื่อนักผจญภัย</label>
+      <input id="inp" type="text" placeholder="พิมพ์ชื่อของเธอ..." autocomplete="off" maxlength="20"/>
+      <button class="btn-p" onclick="startGame()">☀️ เริ่มการผจญภัย!</button>
+      <button class="btn-p2" id="btnContinue" onclick="continueGame()">🗺️ เล่นต่อ</button>
+      <button class="btn-s" onclick="show('slb')">🏆 ดูตาราง Ranking</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAP -->
+<div class="sc" id="sm">
+  <div class="mhdr">
+    <button class="bk" onclick="switchPlayer()">🔄 เปลี่ยนผู้เล่น</button>
+    <div class="mhdr-title">🗺️ แผนที่ อลาบาสตา</div>
+    <div class="mhdr-player" id="mpPlayer"></div>
+    <button class="mu" id="muBtn" onclick="togMusic()">🔊</button>
+  </div>
+  <div id="mpScore" style="text-align:center;color:var(--sand2);font-size:.85rem;padding:3px 0 5px;letter-spacing:.5px;"></div>
+  <div class="map-list" id="mapList"></div>
+</div>
+
+<!-- STORY -->
+<div class="sc" id="si">
+  <div class="shdr">
+    <button class="bk" onclick="show('sm')">← แผนที่</button>
+    <div style="flex:1;color:var(--sand);font-weight:700;text-align:center;font-size:.95rem;">เนื้อเรื่อง</div>
+  </div>
+  <div class="story-wrap">
+    <div class="story-icon" id="sIcon"></div>
+    <div class="story-title" id="sTitle"></div>
+    <div class="story-body" id="sBody"></div>
+    <button class="btn-mission" onclick="startCh()">⚔️ เริ่มภารกิจ!</button>
+  </div>
+</div>
+
+<!-- GAME -->
+<div class="sc" id="sg">
+  <div class="ghdr">
+    <div>
+      <div class="g-hearts" id="gHearts">❤️❤️❤️</div>
+      <div class="g-qcount" id="gQC">ข้อ 1/10</div>
+    </div>
+    <div><div class="g-ch" id="gCh"></div></div>
+    <div>
+      <div class="g-score">⭐ <span id="gScore">0</span></div>
+      <div class="g-score-sub">รวม: <span id="gScoreTot">0</span></div>
+      <div class="g-btns">
+        <button class="bk" style="font-size:.78rem;padding:4px 8px;" onclick="show('sm')">🗺️</button>
+        <button class="mu" style="font-size:1rem;" onclick="togMusic()">🔊</button>
+      </div>
+    </div>
+  </div>
+  <div class="prog"><div class="prog-fill" id="gProg" style="width:0%"></div></div>
+
+  <div class="q-area">
+    <div class="q-text" id="qText">...</div>
+    <div id="solBox">
+      <div class="sol-title">💡 วิธีคิด</div>
+      <div class="sol-step" id="solStep"></div>
+      <div class="sol-ans" id="solAns"></div>
+    </div>
+  </div>
+
+  <div class="scratch-zone">
+    <div class="scratch-bar">
+      <span class="scratch-lbl">✏️ ทดเลข</span>
+      <button class="cb on" style="background:#fff" data-c="#fff" onclick="setC(this)"></button>
+      <button class="cb" style="background:#4fc3f7" data-c="#4fc3f7" onclick="setC(this)"></button>
+      <button class="cb" style="background:#f06292" data-c="#f06292" onclick="setC(this)"></button>
+      <button class="cb" style="background:#a5d6a7" data-c="#a5d6a7" onclick="setC(this)"></button>
+      <div class="clr-btns">
+        <button class="clr-btn" id="eraserBtn" onclick="toggleEraser(this)">🧹 ลบ</button>
+        <button class="clr-btn" onclick="clrCV()">🗑️ ล้าง</button>
+      </div>
+    </div>
+    <canvas id="scratch"></canvas>
+  </div>
+
+  <div class="ans-area">
+    <div class="ch-grid" id="chGrid"></div>
+    <button class="cfm-btn" id="cfmBtn" disabled onclick="onCfm()">✓ ยืนยัน</button>
+  </div>
+</div>
+
+<!-- FEEDBACK -->
+<div id="fb"><div class="fb-ico" id="fbIco"></div></div>
+
+<!-- CHAPTER COMPLETE -->
+<div class="sc" id="scc">
+  <div class="cc-card">
+    <div style="font-size:2.8rem;">🎉</div>
+    <div class="cc-title">ภารกิจสำเร็จ!</div>
+    <div class="cc-stars" id="ccSt">⭐⭐⭐</div>
+    <div class="cc-score">คะแนน: <span id="ccSc">0</span></div>
+    <div class="cc-msg" id="ccMsg"></div>
+    <button class="btn-p" onclick="show('sm')">🗺️ กลับแผนที่</button>
+  </div>
+</div>
+
+<!-- VICTORY -->
+<div class="sc" id="sv">
+  <div class="vic-card">
+    <div class="vic-ico">🏆👑☀️</div>
+    <div class="vic-title">อลาบาสตาได้รับการปลดปล่อย!</div>
+    <div class="vic-sub">วีวี่ได้กลับบ้านแล้ว! โครดิลพ่ายแพ้แล้ว!</div>
+    <div class="vic-score">คะแนนรวม: <span id="vSc" style="color:var(--sand)">0</span> คะแนน</div>
+    <button class="btn-p" onclick="show('slb')">🏆 ดู Ranking</button>
+    <button class="btn-s" style="margin-top:8px;" onclick="goWelcome()">🔄 เล่นใหม่</button>
+  </div>
+</div>
+
+<!-- LEADERBOARD -->
+<div class="sc" id="slb">
+  <div class="lb-hdr">
+    <button class="bk" onclick="goWelcome()">← กลับ</button>
+    <div class="lb-hdr-t">🏆 Ranking อลาบาสตา</div>
+  </div>
+  <div class="lb-body"><div id="lbList" class="lb-empty">กำลังโหลด...</div></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+const G={
+  name:'',ch:0,qi:0,hp:3,
+  chSc:0,totSc:0,
+  done:Array(5).fill(false),
+  stars:Array(5).fill(0),
+  bestSc:Array(5).fill(0),
+  qs:[],sel:null,phase:'idle',
+  mOn:true
+};
+
+// ══════════════════════════════════════════════
+//  CHAPTER DATA — Alabasta Arc
+// ══════════════════════════════════════════════
+const CH=[
+  {
+    n:'🏔️ รีเวิร์สเมาน์เทน & วิสกี้พีค',
+    sub:'กับดักนักล่าค่าหัวและวีวี่เปิดเผยตัว',
+    ico:'🏔️',diff:'⭐⭐',
+    qt:['wep1','ele1','stock1','dist1','div1','budget1','wep2','ele2','grp1','multi1'],
+    ctx:{hero:'ลูฟี่',hero2:'โซโร',villain:'อิกะรัม',villain2:'นักล่าค่าหัว',loc:'วิสกี้พีค',
+         princess:'วีวี่',item:'กระบองเพชรยักษ์',item2:'เสบียง',unit:'เบรี',unit2:'กิโลกรัม'},
+    story:`เรือโกอิ้งแมรี่แล่นฝ่ากระแสน้ำที่เชี่ยวกราก
+ของ <strong>รีเวิร์สเมาน์เทน</strong> ทางเข้าแกรนด์ไลน์
+— ลาบูนวาฬยักษ์ขวางเรือ ลูฟี่ต้องต่อสู้และ
+ทำสัญญาว่าจะกลับมาหา!<br><br>
+
+จากนั้นที่ <strong>วิสกี้พีค</strong> เมืองงานเลี้ยง
+ต้อนรับโจรสลัด กลับเป็น<strong>กับดัก</strong>!
+<strong>อิกะรัม</strong>และ<strong>นักล่าค่าหัว</strong>นับร้อย
+โจมตีอย่างกะทันหัน โซโรสู้คนเดียว
+ฝ่าศัตรูทั้งหมด<br><br>
+
+แล้วความจริงก็ถูกเปิดเผย —
+<strong>มิสเวนส์เดย์</strong> แท้จริงคือ
+<strong>วีวี่</strong> เจ้าหญิงแห่งอลาบาสตา
+ที่ปลอมตัวมาสืบราชการลับ!
+เธอขอร้องให้หมวกฟางช่วยกอบกู้บ้านเกิด!
+<br><br>
+<em>📐 ช่วยคำนวณกำลังรบ เสบียง และทรัพยากร
+เพื่อเตรียมพร้อมออกเดินทาง!</em>`
+  },
+  {
+    n:'🦕 ลิตเติ้ลการ์เดน',
+    sub:'เกาะยักษ์นักรบและเทียนมรณะของมิสเตอร์ทรี',
+    ico:'🦕',diff:'⭐⭐⭐',
+    qt:['wep1','ele1','stock1','dist1','div1','budget1','wep2','ele2','grp1','multi2'],
+    ctx:{hero:'ลูฟี่',hero2:'อุซซัป',villain:'มิสเตอร์ทรี',villain2:'ไดโนเสาร์',loc:'ลิตเติ้ลการ์เดน',
+         princess:'นามิ',item:'ก้อนขี้ผึ้ง',item2:'เกราะ',unit:'เบรี',unit2:'กิโลกรัม'},
+    story:`เกาะ <strong>ลิตเติ้ลการ์เดน</strong> เต็มไปด้วย
+ไดโนเสาร์และสัตว์ร้ายยักษ์ในยุคดึกดำบรรพ์!
+ที่นี่มี <strong>ออร์รี่</strong> และ <strong>โรกี้</strong>
+สองยักษ์นักรบจากเอลบาฟที่ต่อสู้กันมา
+<strong>100 ปี</strong>โดยลืมเหตุผลไปแล้ว<br><br>
+
+<strong>มิสเตอร์ทรี</strong> นักรบบาร็อคเวิร์คส์
+ผู้มีพลังเทียนไข ลอบวางแผนแสบ —
+สร้าง<strong>เทียนพิษยักษ์</strong>ดักจับ
+นามิ วีวี่ และโซโร ตรึงแน่น!
+เมื่อเทียนมอด... ทั้งหมดจะกลายเป็น
+<strong>รูปปั้นขี้ผึ้ง</strong>ตลอดกาล!<br><br>
+
+อุซซัปและลูฟี่ต้องรีบก่อน
+เทียนจะมอดดับ!
+<br><br>
+<em>📐 ช่วยคำนวณเวลาที่เหลือ กำลังรบ
+และทรัพยากรเพื่อช่วยเพื่อน!</em>`
+  },
+  {
+    n:'❄️ เกาะดรัม',
+    sub:'หมอจมูกน้ำเงินและซากุระปาฏิหาริย์',
+    ico:'❄️',diff:'⭐⭐⭐',
+    qt:['wep1','ele1','stock1','dist1','div2','budget1','wep2','ele2','grp1','multi1'],
+    ctx:{hero:'ชอปเปอร์',hero2:'แซนจิ',villain:'วาโปล',villain2:'ทหารวาโปล',loc:'ปราสาทดรัม',
+         princess:'นามิ',item:'ยาสมุนไพร',item2:'หิมะ',unit:'เบรี',unit2:'กิโลกรัม'},
+    story:`นามิล้มป่วยหนักด้วยโรคลึกลับ!
+ลูฟี่แบกนามิฝ่าพายุหิมะขึ้นยอดเขา
+<strong>ดรัมร็อคกี้</strong> เพื่อขอความช่วยเหลือจาก
+<strong>ดร.คูเรฮา</strong> หมอผู้มีฝีมือสูงสุด<br><br>
+
+ที่ยอดเขา พบกับ
+<strong>โทนีโทนี่ ชอปเปอร์</strong> กวางจมูกน้ำเงิน
+ที่กินผลปีศาจฮิโตฮิโตะจนพูดได้!
+ชอปเปอร์ถูกสังคมรังเกียจเพราะรูปลักษณ์
+ที่แปลกประหลาด แต่หัวใจนักรักษาโรค
+ของเขาสั่นสะเทือน — <strong>เขาอยากช่วย!</strong><br><br>
+
+จากนั้น <strong>วาโปล</strong> อดีตกษัตริย์จอมขี้เกียจ
+กลับมายึดปราสาทคืน!
+ชอปเปอร์กิน <strong>รัมเบิลบอล</strong>
+แปลงร่างเป็นนักรบ — ต่อสู้เคียงข้างลูฟี่!
+<br><br>
+<em>📐 ช่วยชอปเปอร์คำนวณยา สมุนไพร
+และกำลังรบเพื่อกอบกู้ปราสาทดรัม!</em>`
+  },
+  {
+    n:'🏜️ อลาบาสตา — ทะเลทรายและเรนเบส',
+    sub:'เอสมาย & กับดักห้องขังใต้ดินของโครดิล',
+    ico:'🏜️',diff:'⭐⭐⭐⭐',
+    qt:['wep1','ele1','stock2','dist1','div2','budget1','wep2','ele2','grp1','multi2'],
+    ctx:{hero:'เอส',hero2:'สโมเกอร์',villain:'โครดิล',villain2:'ทหารกบฏ',loc:'คาสิโนเรนเบส',
+         princess:'วีวี่',item:'น้ำดื่ม',item2:'อาวุธ',unit:'เบรี',unit2:'กิโลกรัม'},
+    story:`กลุ่มลูฟี่มาถึง <strong>อลาบาสตา</strong>
+ดินแดนทะเลทรายอันร้อนระอุ!
+ในทะเลทรายพวกเขาได้พบ
+<strong>พอร์ตกัส ดี เอส</strong>
+พี่ชายบุญธรรมของลูฟี่
+ผู้ถือผลปีศาจไฟ!<br><br>
+
+มุ่งหน้าสู่ <strong>คาสิโนเรนเบส</strong>
+ฐานบัญชาการของโครดิล —
+ลูฟี่ โซโร นามิ อุซซัป ตกกับดัก!
+ตกลงสู่ <strong>ห้องขังใต้ดิน</strong>
+ที่น้ำกำลังท่วมมิด!<br><br>
+
+<strong>โครดิล</strong>โยนกุญแจให้จระเข้กิน
+แซนจิปลอมตัวเป็น <strong>มิสเตอร์พริ้นซ์</strong>
+เพื่อหาทางช่วยเพื่อน
+ก่อนน้ำจะท่วมสูง!
+<br><br>
+<em>📐 ช่วยคำนวณทรัพยากรและกลยุทธ์
+เพื่อหนีจากกับดักและช่วยอลาบาสตา!</em>`
+  },
+  {
+    n:'⚔️ อัลบาร์นา — ศึกตัดสินครั้งสุดท้าย',
+    sub:'โซโรปะทะมิสเตอร์วัน & ลูฟี่ปะทะโครดิล',
+    ico:'⚔️',diff:'⭐⭐⭐⭐⭐',
+    qt:['wep2','ele2','stock2','dist2','div2','budget2','wep1','ele1','grp2','multi2'],
+    ctx:{hero:'มิสเตอร์วัน',hero2:'วีวี่',villain:'โครดิล',villain2:'เอเยนต์บาร็อคเวิร์คส์',loc:'จัตุรัสอัลบาร์นา',
+         princess:'เปรู',item:'ชิ้นส่วนระเบิดเวลา',item2:'ทหาร',unit:'เบรี',unit2:'กิโลกรัม'},
+    story:`สงครามกลางเมืองปะทุขึ้นที่
+<strong>อัลบาร์นา</strong>!
+กองทัพราชวงศ์ปะทะกองกำลังกบฏ
+ท่ามกลางผงคลีและเสียงปืน...<br><br>
+
+หมวกฟางแยกย้ายกัน —
+<strong>โซโร</strong>ปะทะ <strong>มิสเตอร์วัน</strong>
+ร่างเหล็กที่กระสุนและดาบไม่อาจสะเทือน!
+<strong>แซนจิ</strong>ปะทะ <strong>บอนคลัง</strong>
+<strong>นามิ</strong>เผชิญหน้า <strong>มิสดับเบิลฟิงเกอร์</strong><br><br>
+
+โครดิลวางระเบิดเวลาที่หอนาฬิกา
+พร้อมทำลายล้างทั้งเมือง!
+<strong>เปรู</strong>นักรบสูงสุดบินฉวยระเบิด
+ขึ้นฟ้า สังเวยตนเองเพื่อชาติ!<br><br>
+
+ลูฟี่ค้นพบจุดอ่อนของโครดิล —
+<strong>เลือดและน้ำ</strong>ทำให้ทรายจับตัว!
+ต่อยทะลุชั้นหินขึ้นฟ้า ปิดตำนาน!
+<br><br>
+<em>📐 โจทย์สุดท้ายและยากที่สุด!
+ช่วยคำนวณเพื่อปลดปล่อยอลาบาสตา!</em>`
+  }
+];
+
+// ══════════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════════
+const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const fmt=n=>n.toLocaleString('th-TH');
+
+// ══════════════════════════════════════════════
+//  QUESTION GENERATORS — 10 ประเภท
+// ══════════════════════════════════════════════
+
+// ประเภท 1: โจมตีด้วยอาวุธ X ชุด ชุดละ Y ชิ้น แต่เสียหาย Z ชิ้น (×  แล้วลบ)
+function genWep(level,ci){
+  const c=CH[ci].ctx;
+  const xMax=level===1?50:99, yMax=level===1?79:99;
+  const zMax=level===1?700:900;
+  const x=R(20,xMax), y=R(20,yMax);
+  const total=x*y;
+  const z=R(100,Math.min(total-10, zMax));
+  const ans=total-z;
+  const text=`<strong>${c.villain}</strong> โจมตีด้วย${c.item} ${fmt(x)} ชุด ชุดละ ${y} ชิ้น แต่มี${c.item}พังระหว่างทาง ${fmt(z)} ชิ้น — โจมตีสำเร็จกี่ชิ้น?`;
+  return{text,ans,_a:total,_b:z,_op:'sub',_detail:`${x}×${y}=${fmt(total)}  แล้ว ${fmt(total)}-${fmt(z)}`};
+}
+
+// ประเภท 2: ค่าไฟ (ใช้ไฟ X หน่วย ค่าหน่วยละ 5 บาท นามิจ่ายด้วยแบงก์ 1,000 จำนวน N ใบ)
+function genEle(level,ci){
+  const c=CH[ci].ctx;
+  const xMax=level===1?8000:9500;
+  const x=R(1000,xMax); // หน่วยไฟ
+  const cost=x*5;
+  // หาจำนวนแบงก์ที่ต้องจ่ายให้มากกว่าค่าไฟ
+  const n=Math.ceil(cost/1000)+R(0,5); // แบงก์ที่จ่าย
+  const paid=n*1000;
+  const ans=paid-cost;
+  const text=`การต่อสู้ที่ <strong>${c.loc}</strong> ทำให้ระบบไฟฟ้าทำงานหนัก ใช้ไฟไป ${fmt(x)} หน่วย (หน่วยละ 5 บาท) <strong>${c.princess}</strong>จ่ายค่าเสียหายด้วยแบงก์ 1,000 เบรี จำนวน ${n} ใบ — จะได้รับเงินทอนกี่เบรี?`;
+  return{text,ans,_a:paid,_b:cost,_op:'sub',_detail:`ค่าไฟ=${fmt(x)}×5=${fmt(cost)}, จ่าย=${n}×1,000=${fmt(paid)}, ทอน=${fmt(paid)}-${fmt(cost)}`};
+}
+
+// ประเภท 3: มีสินค้า A หน่วย ถูกขโมย B และเน่าเสีย C หน่วย
+function genStock(level,ci){
+  const c=CH[ci].ctx;
+  const digits=level===1?5:6;
+  const lo=Math.pow(10,digits-1), hi=Math.pow(10,digits)-1;
+  const a=R(lo,hi);
+  const b=R(10000,Math.floor(a*0.25));
+  const c2=R(5000,Math.floor((a-b)*0.2));
+  const ans=a-b-c2;
+  const text=`กองทัพ<strong>${c.villain2}</strong>มี${c.item} ${fmt(a)} หน่วย ถูกขโมยไป ${fmt(b)} หน่วย และเน่าเสียไปอีก ${fmt(c2)} หน่วย — เหลือ${c.item}ใช้งานได้กี่หน่วย?`;
+  return{text,ans,_a:a-b,_b:c2,_op:'sub',_detail:`${fmt(a)}-${fmt(b)}-${fmt(c2)}=${fmt(ans)}`};
+}
+
+// ประเภท 4: ระยะทาง — เคลื่อนที่ V เมตร/นาที เป็นเวลา T นาที + พุ่งไปอีก D เมตร
+function genDist(level,ci){
+  const c=CH[ci].ctx;
+  const vMax=level===1?89:99, tMax=level===1?94:99;
+  const v=R(10,vMax), t=R(10,tMax);
+  const vt=v*t;
+  const d=R(10000,level===1?90000:99000);
+  const ans=vt+d;
+  const text=`<strong>${c.hero2}</strong>เคลื่อนที่ด้วยความเร็ว ${v} เมตรต่อนาที เป็นเวลา ${t} นาที จากนั้น <strong>${c.hero}</strong>พุ่งทะยานไปข้างหน้าอีก ${fmt(d)} เมตร — ทั้งสองเดินทางรวมกันกี่เมตร?`;
+  return{text,ans,_a:vt,_b:d,_op:'add',_detail:`${v}×${t}=${fmt(vt)}, ${fmt(vt)}+${fmt(d)}=${fmt(ans)}`};
+}
+
+// ประเภท 5: หารสมบัติ (หาร 1 หลัก)
+function genDiv1(ci){
+  const c=CH[ci].ctx;
+  const divisor=R(2,9);
+  const quot=R(1000,9999);
+  const dividend=divisor*quot;
+  const text=`<strong>${c.hero}</strong>ค้นพบสมบัติมูลค่า ${fmt(dividend)} ${c.unit} ต้องการแบ่งให้เพื่อนร่วมทาง ${divisor} คน (รวม${c.hero}ด้วย) เท่ากันทุกคน — แต่ละคนได้รับกี่${c.unit}?`;
+  return{text,ans:quot,_a:dividend,_b:divisor,_op:'div',_detail:`${fmt(dividend)}÷${divisor}=${fmt(quot)}`};
+}
+
+// ประเภท 6: หารสมบัติ (หาร 2 หลัก)
+function genDiv2(ci){
+  const c=CH[ci].ctx;
+  const divisor=R(10,49);
+  const quot=R(100,999);
+  const dividend=divisor*quot;
+  const text=`กองทัพ<strong>${c.villain2}</strong> ${fmt(dividend)} นาย ถูกจับแล้วแบ่งเป็นกลุ่ม กลุ่มละ ${divisor} คน/ตัวเท่ากัน — แบ่งได้กี่กลุ่ม?`;
+  return{text,ans:quot,_a:dividend,_b:divisor,_op:'div',_detail:`${fmt(dividend)}÷${divisor}=${fmt(quot)}`};
+}
+
+// ประเภท 7: งบประมาณ (X - Y - Z + W)
+function genBudget(level,ci){
+  const c=CH[ci].ctx;
+  const base=R(600000,900000);
+  const pay=R(150000,Math.floor(base*0.35));
+  const buy=R(50000,Math.floor(base*0.18));
+  const bonus=R(30000,Math.floor(base*0.12));
+  const ans=base-pay-buy+bonus;
+  const text=`<strong>${c.villain}</strong>มีเงินทุน ${fmt(base)} ${c.unit} จ่ายค่าจ้าง${c.villain2}ไป ${fmt(pay)} ${c.unit} ซื้ออาวุธ ${fmt(buy)} ${c.unit} และได้รับเงินสนับสนุนเพิ่ม ${fmt(bonus)} ${c.unit} — ${c.villain}จะเหลือเงินกี่${c.unit}?`;
+  return{text,ans,_a:base-pay-buy,_b:bonus,_op:'add',_detail:`${fmt(base)}-${fmt(pay)}-${fmt(buy)}+${fmt(bonus)}=${fmt(ans)}`};
+}
+
+// ประเภท 8: พลังงาน H ชั่วโมง M นาที × E หน่วย/นาที
+function genEnergy(level,ci){
+  const c=CH[ci].ctx;
+  const h=R(2,level===1?5:6), m=R(10,55);
+  const totalMin=h*60+m;
+  const e=R(15,level===1?80:99);
+  const ans=totalMin*e;
+  const text=`<strong>${c.hero2}</strong>สำรวจ<strong>${c.loc}</strong>เป็นเวลา ${h} ชั่วโมง ${m} นาที ระหว่างนั้นใช้พลังงานนาทีละ ${e} หน่วย — ใช้พลังงานรวมทั้งหมดกี่หน่วย?`;
+  return{text,ans,_a:totalMin,_b:e,_op:'mul',_detail:`เวลา=${h}×60+${m}=${totalMin}นาที, ${totalMin}×${e}=${fmt(ans)}`};
+}
+
+// ประเภท 9: แบ่งกลุ่ม ((X-Y-Z) ÷ G)
+function genGroup(level,ci){
+  const c=CH[ci].ctx;
+  const g=R(level===1?10:20, level===1?79:99);
+  const quot=R(100,level===1?499:999);
+  const remaining=g*quot;
+  const total=remaining + R(20000,100000);
+  const killed1=R(10000,Math.floor((total-remaining)*0.6));
+  const killed2=total-remaining-killed1;
+  const ans=quot;
+  const text=`ที่<strong>${c.loc}</strong>มี${c.villain2}ซ่อนตัวอยู่ ${fmt(total)} คน/ตัว <strong>${c.hero}</strong>จัดการไป ${fmt(killed1)} และ <strong>${c.hero2}</strong>จัดการไป ${fmt(killed2)} ที่เหลือถูกจับแบ่งเป็นกลุ่มละ ${g} คน/ตัว — แบ่งได้กี่กลุ่ม?`;
+  return{text,ans,_a:remaining,_b:g,_op:'div',_detail:`เหลือ=${fmt(total)}-${fmt(killed1)}-${fmt(killed2)}=${fmt(remaining)}, ${fmt(remaining)}÷${g}=${fmt(ans)}`};
+}
+
+// ประเภท 10: โกดัง (X × Y ÷ Z) — คูณแล้วหาร
+function genMulti(level,ci){
+  const c=CH[ci].ctx;
+  const z=R(level===1?10:15, level===1?25:49);
+  const perWarehouse=R(100,level===1?499:999);
+  const x=R(level===1?100:500,level===1?999:1500);
+  const yEach=Math.round(perWarehouse*z/x);
+  if(yEach<1) return genMulti(level,ci); // ลองใหม่ถ้าผิดพลาด
+  const totalItems=x*yEach;
+  const ans=Math.floor(totalItems/z);
+  // ตรวจให้หารลงตัว
+  const realAns=Math.floor(x*yEach/z);
+  const realTotal=realAns*z;
+  const realX=Math.ceil(realTotal/yEach);
+  const finalTotal=realX*yEach;
+  const finalAns=Math.floor(finalTotal/z);
+  const text=`${c.villain2} ${fmt(realX)} คน/ตัว แต่ละคนแบก${c.item}คนละ ${yEach} ชิ้น นำไปเก็บไว้ในโกดัง ${z} แห่งเท่ากัน — โกดังแต่ละแห่งจะมี${c.item}กี่ชิ้น?`;
+  return{text,ans:finalAns,_a:realX*yEach,_b:z,_op:'div',_detail:`รวม=${realX}×${yEach}=${fmt(realX*yEach)}, ${fmt(realX*yEach)}÷${z}=${fmt(finalAns)}`};
+}
+
+// ── DISPATCHER ──
+const QF={
+  wep1:(ci)=>genWep(1,ci), wep2:(ci)=>genWep(2,ci),
+  ele1:(ci)=>genEle(1,ci), ele2:(ci)=>genEle(2,ci),
+  stock1:(ci)=>genStock(1,ci), stock2:(ci)=>genStock(2,ci),
+  dist1:(ci)=>genDist(1,ci), dist2:(ci)=>genDist(2,ci),
+  div1:(ci)=>genDiv1(ci),   div2:(ci)=>genDiv2(ci),
+  budget1:(ci)=>genBudget(1,ci), budget2:(ci)=>genBudget(2,ci),
+  nrg1:(ci)=>genEnergy(1,ci),   nrg2:(ci)=>genEnergy(2,ci),
+  grp1:(ci)=>genGroup(1,ci),    grp2:(ci)=>genGroup(2,ci),
+  multi1:(ci)=>genMulti(1,ci),  multi2:(ci)=>genMulti(2,ci),
+};
+
+function makeQs(ci){
+  return CH[ci].qt.map(t=>{
+    let q,tries=0;
+    do{ q=(QF[t]||QF.wep1)(ci); tries++; }while((q.ans<=0||!isFinite(q.ans))&&tries<20);
+    if(q.ans<=0||!isFinite(q.ans)) q.ans=100;
+    return{...q,choices:makeChoices(q)};
+  });
+}
+
+function makeChoices(q){
+  const ans=q.ans,a=q._a,b=q._b,op=q._op;
+  const s=new Set([ans]);
+  const traps=[];
+  if(op==='add'){
+    traps.push(ans-10,ans-100,ans-1000,ans+10,ans+100,ans-1,ans+1,ans+1000);
+    if(a-b>0) traps.push(a-b);
+  } else if(op==='sub'){
+    traps.push(ans+10,ans+100,ans+1000,ans-10,ans-100,a+b,ans+1,ans-1);
+  } else if(op==='mul'){
+    traps.push(a*(b-1),a*(b+1),ans-a,ans+a);
+    if(b>=10) traps.push(a*(b%10||1),a*Math.floor(b/10));
+    traps.push(ans-b,ans+b);
+  } else if(op==='div'){
+    traps.push(ans+1,ans-1,b,ans+b,ans-b>0?ans-b:ans+2);
+    if(a*b!==ans) traps.push(a*b);
+  }
+  for(const t of traps){
+    const v=Math.round(t);
+    if(v>0&&v!==ans&&s.size<4) s.add(v);
+  }
+  const range=Math.max(30,Math.floor(ans*.15));
+  let attempts=0;
+  while(s.size<4&&attempts++<400){
+    const w=ans+R(-range,range);
+    if(w>0&&w!==ans) s.add(w);
+  }
+  const arr=[...s];
+  for(let i=arr.length-1;i>0;i--){const j=R(0,i);[arr[i],arr[j]]=[arr[j],arr[i]];}
+  return arr;
+}
+
+// ══════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════
+function show(id){
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if(id==='slb') loadLB();
+  if(id==='sg') setTimeout(initCV,80);
+}
+
+function goWelcome(){
+  if(G.name){
+    document.getElementById('inp').value=G.name;
+    document.getElementById('btnContinue').style.display='block';
+    document.getElementById('btnContinue').textContent=`🗺️ เล่นต่อในฐานะ ${G.name}`;
+  } else {
+    document.getElementById('inp').value='';
+    document.getElementById('btnContinue').style.display='none';
+  }
+  show('sw');
+}
+
+function continueGame(){
+  document.getElementById('mpPlayer').textContent='👤 '+G.name;
+  renderMap(); show('sm');
+  startMusic();
+}
+
+function startGame(){
+  const n=document.getElementById('inp').value.trim();
+  if(!n){document.getElementById('inp').focus();return;}
+  if(n!==G.name){
+    G.name=n;G.totSc=0;G.done.fill(false);G.stars.fill(0);G.bestSc.fill(0);
+    G.ch=0;G.qi=0;G.hp=3;G.chSc=0;
+  }
+  document.getElementById('mpPlayer').textContent='👤 '+G.name;
+  renderMap(); show('sm');
+  startMusic();
+}
+
+function switchPlayer(){
+  G.name='';G.totSc=0;G.ch=0;G.qi=0;G.hp=3;G.chSc=0;
+  G.done.fill(false);G.stars.fill(0);G.bestSc.fill(0);
+  document.getElementById('inp').value='';
+  document.getElementById('btnContinue').style.display='none';
+  show('sw');
+}
+
+function renderMap(){
+  const el=document.getElementById('mapList');
+  el.innerHTML='';
+  const scEl=document.getElementById('mpScore');
+  if(scEl) scEl.textContent=G.totSc>0?`⭐ คะแนนรวม: ${fmt(G.totSc)} คะแนน`:'';
+  CH.forEach((ch,i)=>{
+    const done=G.done[i];
+    const locked=i>0&&!G.done[i-1];
+    const d=document.createElement('div');
+    d.className='map-btn'+(done?' done':'')+(locked?' locked':'');
+    const best=G.bestSc[i]>0?`<div class="map-best">🏅 สูงสุด ${G.bestSc[i]} คะแนน</div>`:'';
+    d.innerHTML=`
+      <div class="map-ico">${ch.ico}</div>
+      <div class="map-info">
+        <div class="map-name">ด่านที่ ${i+1}: ${ch.n}</div>
+        <div class="map-sub">${ch.sub}</div>
+        ${best}
+      </div>
+      <div class="map-right">
+        <div class="map-diff">${ch.diff}</div>
+        <div class="map-stars">${done?'⭐'.repeat(G.stars[i])+'☆'.repeat(3-G.stars[i]):'☆☆☆'}</div>
+        ${locked?'<div style="color:#555;font-size:1.2rem;">🔒</div>':''}
+      </div>`;
+    if(!locked) d.onclick=()=>openStory(i);
+    el.appendChild(d);
+  });
+}
+
+function openStory(ci){
+  G.ch=ci;
+  document.getElementById('sIcon').textContent=CH[ci].ico+' ด่านที่ '+(ci+1);
+  document.getElementById('sTitle').textContent=CH[ci].n;
+  document.getElementById('sBody').innerHTML=CH[ci].story;
+  show('si');
+}
+
+function startCh(){
+  G.qi=0;G.hp=3;G.chSc=0;G.phase='idle';G.sel=null;
+  G.qs=makeQs(G.ch);
+  show('sg');
+  document.getElementById('gCh').textContent=CH[G.ch].n;
+  document.getElementById('gHearts').textContent='❤️❤️❤️';
+  document.getElementById('gScore').textContent='0';
+  document.getElementById('gScoreTot').textContent=fmt(G.totSc);
+  document.getElementById('solBox').classList.remove('show');
+  renderQ();
+  setTimeout(initCV,80);
+}
+
+// ══════════════════════════════════════════════
+//  GAME LOGIC
+// ══════════════════════════════════════════════
+function renderQ(){
+  const q=G.qs[G.qi];
+  G.sel=null;G.phase='idle';
+  document.getElementById('solBox').classList.remove('show');
+  document.getElementById('gHearts').textContent='❤️'.repeat(G.hp)+'🖤'.repeat(3-G.hp);
+  document.getElementById('qText').innerHTML=q.text;
+  document.getElementById('gQC').textContent=`ข้อ ${G.qi+1}/${G.qs.length}`;
+  document.getElementById('gProg').style.width=`${(G.qi/G.qs.length)*100}%`;
+  const grid=document.getElementById('chGrid');
+  grid.innerHTML='';
+  q.choices.forEach((c,i)=>{
+    const b=document.createElement('button');
+    b.className='ch-btn';
+    b.textContent=fmt(c);
+    b.onclick=()=>onSel(i,b);
+    grid.appendChild(b);
+  });
+  // reset confirm button
+  const cfm=document.getElementById('cfmBtn');
+  cfm.disabled=true;cfm.textContent='✓ ยืนยัน';cfm.style.display='block';
+  // remove any leftover next button
+  document.querySelectorAll('.next-btn').forEach(b=>b.remove());
+  document.querySelectorAll('.ch-btn').forEach(b=>b.disabled=false);
+}
+
+function onSel(i,btn){
+  if(G.phase!=='idle') return;
+  G.sel=i;G.phase='sel';
+  document.querySelectorAll('.ch-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('cfmBtn').disabled=false;
+}
+
+function onCfm(){
+  if(G.phase!=='sel') return;
+  G.phase='ans';
+  const q=G.qs[G.qi];
+  const chosen=q.choices[G.sel];
+  const ok=chosen===q.ans;
+  document.querySelectorAll('.ch-btn').forEach((b,i)=>{
+    b.disabled=true;
+    if(q.choices[i]===q.ans) b.classList.add('cor');
+    else if(i===G.sel&&!ok) b.classList.add('wrg');
+  });
+  const cfm=document.getElementById('cfmBtn');
+  cfm.style.display='none';
+  const nextBtn=document.createElement('button');
+  nextBtn.className='next-btn';
+  nextBtn.textContent=G.qi<G.qs.length-1?'→ ข้อถัดไป':'🏆 ดูผลคะแนน';
+  nextBtn.onclick=nextQ;
+  cfm.parentNode.appendChild(nextBtn);
+
+  if(ok){
+    G.chSc+=10;
+    if(G.chSc>G.bestSc[G.ch]) G.bestSc[G.ch]=G.chSc;
+    G.totSc=G.bestSc.reduce((s,v)=>s+v,0);
+    document.getElementById('gScore').textContent=G.chSc;
+    document.getElementById('gScoreTot').textContent=fmt(G.totSc);
+    saveScore();
+    showFB('✅');ptcl(['⭐','✨','☀️','🌟'],6);playSnd('ok');
+  } else {
+    G.hp--;
+    document.getElementById('gHearts').textContent='❤️'.repeat(G.hp)+'🖤'.repeat(3-G.hp);
+    showFB('❌');playSnd('bad');
+    showSolution(q);
+    if(G.hp<=0){
+      setTimeout(()=>{
+        nextBtn.remove();
+        cfm.style.display='block';cfm.disabled=false;
+        if(confirm('หมดพลังแล้ว! 😅\nลองใหม่อีกครั้ง?')) startCh();
+        else show('sm');
+      },1500);
+      return;
+    }
+  }
+}
+
+function nextQ(){
+  document.querySelectorAll('.next-btn').forEach(b=>b.remove());
+  document.getElementById('cfmBtn').style.display='block';
+  G.qi++;
+  if(G.qi>=G.qs.length) endCh();
+  else renderQ();
+}
+
+function endCh(){
+  const tot=G.qs.length*10,pct=G.chSc/tot;
+  const st=pct>=.9?3:pct>=.6?2:1;
+  G.done[G.ch]=true;G.stars[G.ch]=Math.max(G.stars[G.ch],st);
+  if(G.chSc>G.bestSc[G.ch]) G.bestSc[G.ch]=G.chSc;
+  G.totSc=G.bestSc.reduce((s,v)=>s+v,0);
+  document.getElementById('ccSt').textContent='⭐'.repeat(st)+'☆'.repeat(3-st);
+  document.getElementById('ccSc').innerHTML=`<span>${G.chSc}</span> / ${tot}`;
+  const msgs=[
+    '💪 ดีมาก! ลองทำให้ได้คะแนนเต็มนะ! ฝึกอีกนิดก็เก่งเลย!',
+    '😊 เก่งมาก! เกือบเต็มแล้ว! ลองอีกครั้งให้ได้ดาว 3 ดวง!',
+    '🌟 ยอดเยี่ยม! คะแนนเต็ม! เก่งมากที่สุด!'
+  ];
+  document.getElementById('ccMsg').textContent=msgs[st-1];
+  ptcl(['🎉','⭐','☀️','🏆'],8);
+  saveScore();
+  if(G.ch===4){
+    setTimeout(()=>{document.getElementById('vSc').textContent=fmt(G.totSc);show('sv');},700);
+  } else {
+    show('scc');
+  }
+  renderMap();
+}
+
+// ══════════════════════════════════════════════
+//  SOLUTION DISPLAY
+// ══════════════════════════════════════════════
+function showSolution(q){
+  const a=q._a,b=q._b,ans=q.ans,op=q._op;
+  let steps='',ansLine='';
+  if(op==='add'){
+    const aS=fmt(a),bS=fmt(b),ansS=fmt(ans);
+    const w=Math.max(aS.length,bS.length,ansS.length)+2;
+    steps=`  ${aS.padStart(w)}\n+ ${bS.padStart(w)}\n${'─'.repeat(w+2)}\n  ${ansS.padStart(w)}`;
+    ansLine=`✅ คำตอบ: ${fmt(a)} + ${fmt(b)} = ${fmt(ans)}`;
+  } else if(op==='sub'){
+    const aS=fmt(a),bS=fmt(b),ansS=fmt(ans);
+    const w=Math.max(aS.length,bS.length,ansS.length)+2;
+    steps=`  ${aS.padStart(w)}\n− ${bS.padStart(w)}\n${'─'.repeat(w+2)}\n  ${ansS.padStart(w)}`;
+    ansLine=`✅ คำตอบ: ${fmt(a)} − ${fmt(b)} = ${fmt(ans)}`;
+  } else if(op==='mul'){
+    if(b<10){
+      steps=`${fmt(a)} × ${b} = ${fmt(ans)}`;
+    } else {
+      const b1=Math.floor(b/10),b0=b%10;
+      const p0=a*b0,p1=a*b1;
+      steps=`${fmt(a)} × ${b0} (หลักหน่วย) = ${fmt(p0)}\n${fmt(a)} × ${b1}0 (หลักสิบ)  = ${fmt(p1*10)}\n${'─'.repeat(22)}\n${fmt(p0)} + ${fmt(p1*10)} = ${fmt(ans)}`;
+    }
+    ansLine=`✅ คำตอบ: ${fmt(a)} × ${fmt(b)} = ${fmt(ans)}`;
+  } else if(op==='div'){
+    const detail=q._detail||`${fmt(a)} ÷ ${b} = ${fmt(ans)}`;
+    steps=`วิธีคิด: ${detail}\n\nตรวจสอบ: ${b} × ${fmt(ans)} = ${fmt(b*ans)}`;
+    ansLine=`✅ คำตอบ: ${fmt(a)} ÷ ${fmt(b)} = ${fmt(ans)}`;
+  }
+  // แสดง _detail ถ้ามี
+  if(q._detail && op!=='div'){
+    steps=`วิธีคิด: ${q._detail}\n\n`+steps;
+  }
+  document.getElementById('solStep').textContent=steps;
+  document.getElementById('solAns').textContent=ansLine;
+  document.getElementById('solBox').classList.add('show');
+}
+
+function showFB(e){
+  const el=document.getElementById('fb');
+  document.getElementById('fbIco').textContent=e;
+  el.classList.add('on');
+  setTimeout(()=>el.classList.remove('on'),700);
+}
+
+function ptcl(emos,n){
+  for(let i=0;i<n;i++) setTimeout(()=>{
+    const p=document.createElement('div');p.className='ptcl';
+    p.textContent=emos[R(0,emos.length-1)];
+    p.style.left=R(15,85)+'vw';p.style.top=R(35,65)+'vh';
+    document.body.appendChild(p);setTimeout(()=>p.remove(),1100);
+  },i*110);
+}
+
+// ══════════════════════════════════════════════
+//  CANVAS SCRATCH PAD
+// ══════════════════════════════════════════════
+let cv,ctx,drw=false,penC='#fff',eraserMode=false;
+
+function initCV(){
+  cv=document.getElementById('scratch');
+  if(!cv) return;
+  const nc=cv.cloneNode(false);
+  cv.parentNode.replaceChild(nc,cv);
+  cv=nc;
+  const dpr=window.devicePixelRatio||1;
+  const rc=cv.getBoundingClientRect();
+  if(!rc.width) return;
+  cv.width=rc.width*dpr;
+  cv.height=rc.height*dpr;
+  ctx=cv.getContext('2d',{desynchronized:true});
+  ctx.scale(dpr,dpr);
+  ctx.lineCap='round';ctx.lineJoin='round';
+  let p0={x:0,y:0},mid0={x:0,y:0};
+  function getXY(e){const r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top,pr:e.pressure||0};}
+  function applyStyle(pressure,isPen){
+    if(eraserMode){ctx.globalCompositeOperation='destination-out';ctx.strokeStyle='rgba(0,0,0,1)';ctx.lineWidth=isPen?(pressure>0?Math.max(12,pressure*28):14):18;}
+    else{ctx.globalCompositeOperation='source-over';ctx.strokeStyle=penC;ctx.lineWidth=isPen?(pressure>0?Math.max(1,pressure*3.5):2):2.5;}
+  }
+  function drawSmooth(x,y,pressure,isPen){
+    const mid1={x:(p0.x+x)/2,y:(p0.y+y)/2};
+    applyStyle(pressure,isPen);
+    ctx.beginPath();ctx.moveTo(mid0.x,mid0.y);ctx.quadraticCurveTo(p0.x,p0.y,mid1.x,mid1.y);ctx.stroke();
+    mid0=mid1;p0={x,y};
+  }
+  cv.addEventListener('pointerdown',e=>{
+    drw=true;cv.setPointerCapture(e.pointerId);
+    const{x,y,pr}=getXY(e);p0={x,y};mid0={x,y};
+    const isPen=e.pointerType==='pen';
+    applyStyle(pr,isPen);
+    ctx.beginPath();ctx.arc(x,y,ctx.lineWidth/2,0,Math.PI*2);
+    ctx.fillStyle=eraserMode?'rgba(0,0,0,1)':penC;ctx.fill();
+    ctx.globalCompositeOperation=eraserMode?'destination-out':'source-over';
+    e.preventDefault();
+  },{passive:false});
+  cv.addEventListener('pointermove',e=>{
+    if(!drw) return;
+    const isPen=e.pointerType==='pen';
+    const pts=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+    for(const ce of pts){const{x,y,pr}=getXY(ce);const dx=x-p0.x,dy=y-p0.y;if(dx*dx+dy*dy<0.25)continue;drawSmooth(x,y,pr,isPen);}
+    e.preventDefault();
+  },{passive:false});
+  cv.addEventListener('pointerup',e=>{if(!drw)return;drw=false;const{x,y,pr}=getXY(e);drawSmooth(x,y,pr,e.pointerType==='pen');},{passive:true});
+  cv.addEventListener('pointercancel',()=>{drw=false;},{passive:true});
+}
+
+function toggleEraser(btn){
+  eraserMode=!eraserMode;btn.classList.toggle('on',eraserMode);
+  if(eraserMode){document.querySelectorAll('.cb').forEach(b=>b.classList.remove('on'));}
+  else{if(ctx)ctx.globalCompositeOperation='source-over';const ac=document.querySelector(`.cb[data-c="${penC}"]`);if(ac)ac.classList.add('on');}
+}
+function setC(btn){
+  eraserMode=false;document.getElementById('eraserBtn').classList.remove('on');
+  penC=btn.dataset.c;document.querySelectorAll('.cb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');if(ctx){ctx.strokeStyle=penC;ctx.globalCompositeOperation='source-over';}
+}
+function clrCV(){
+  if(!cv||!ctx)return;const dpr=window.devicePixelRatio||1;
+  ctx.globalCompositeOperation='source-over';ctx.clearRect(0,0,cv.width/dpr,cv.height/dpr);
+}
+
+// ══════════════════════════════════════════════
+//  MUSIC — Arabian/Desert Adventure Theme
+// ══════════════════════════════════════════════
+let mCtx,mTimer;
+// Maqam Hijaz scale (ธีมอาหรับ/ทะเลทราย)
+const MELODY=[
+  [293.7,200],[311.1,150],[391.9,250],[440,400],[391.9,200],
+  [349.2,200],[311.1,400],[293.7,200],[261.6,200],[293.7,400],
+  [391.9,200],[440,200],[523.3,200],[587.3,400],[523.3,200],
+  [440,250],[391.9,150],[440,200],[523.3,200],[440,400],
+  [391.9,200],[349.2,200],[311.1,200],[293.7,600],
+];
+let mIdx=0;
+
+function startMusic(){
+  if(!G.mOn) return;
+  try{
+    mCtx=mCtx||new(window.AudioContext||window.webkitAudioContext)();
+    if(mCtx.state==='suspended') mCtx.resume();
+    playMelStep();
+  }catch(e){}
+}
+
+function playMelStep(){
+  if(!G.mOn||!mCtx) return;
+  const[freq,dur]=MELODY[mIdx%MELODY.length]; mIdx++;
+  try{
+    // melody
+    const osc=mCtx.createOscillator();
+    const gain=mCtx.createGain();
+    const filt=mCtx.createBiquadFilter();
+    filt.type='bandpass'; filt.frequency.value=freq*2; filt.Q.value=2;
+    osc.type='sawtooth'; osc.frequency.value=freq;
+    gain.gain.setValueAtTime(.055,mCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001,mCtx.currentTime+dur/1000*.9);
+    osc.connect(filt); filt.connect(gain); gain.connect(mCtx.destination);
+    osc.start(); osc.stop(mCtx.currentTime+dur/1000);
+    // bass drone every 4 notes
+    if(mIdx%4===0){
+      const bass=mCtx.createOscillator();
+      const bg=mCtx.createGain();
+      bass.type='sine'; bass.frequency.value=freq/2;
+      bg.gain.setValueAtTime(.04,mCtx.currentTime);
+      bg.gain.exponentialRampToValueAtTime(.001,mCtx.currentTime+dur/1000*1.5);
+      bass.connect(bg); bg.connect(mCtx.destination);
+      bass.start(); bass.stop(mCtx.currentTime+dur/1000*1.5);
+    }
+    // tabla-style percussion every 3 notes
+    if(mIdx%3===0){
+      const buf=mCtx.createBuffer(1,Math.ceil(mCtx.sampleRate*.06),mCtx.sampleRate);
+      const d=buf.getChannelData(0);
+      for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.exp(-i/(mCtx.sampleRate*.012));
+      const src=mCtx.createBufferSource();
+      const pg=mCtx.createGain(); pg.gain.value=.035;
+      src.buffer=buf; src.connect(pg); pg.connect(mCtx.destination); src.start();
+    }
+  }catch(e){}
+  mTimer=setTimeout(playMelStep, dur+20);
+}
+
+function stopMusic(){ clearTimeout(mTimer); }
+function togMusic(){
+  G.mOn=!G.mOn;
+  document.querySelectorAll('.mu').forEach(b=>b.textContent=G.mOn?'🔊':'🔇');
+  G.mOn?startMusic():stopMusic();
+}
+
+function playSnd(type){
+  if(!mCtx&&!G.mOn) return;
+  try{
+    const ac=mCtx||new(window.AudioContext||window.webkitAudioContext)();
+    if(type==='ok'){
+      [523.3,659.3,783.9].forEach((f,i)=>setTimeout(()=>{
+        const o=ac.createOscillator(),g=ac.createGain();
+        o.type='sine';o.frequency.value=f;
+        g.gain.setValueAtTime(.1,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.15);
+        o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.15);
+      },i*80));
+    } else {
+      [330,293.7,261.6].forEach((f,i)=>setTimeout(()=>{
+        const o=ac.createOscillator(),g=ac.createGain();
+        o.type='sawtooth';o.frequency.value=f;
+        g.gain.setValueAtTime(.08,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.18);
+        o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.18);
+      },i*70));
+    }
+  }catch(e){}
+}
+
+// ══════════════════════════════════════════════
+//  LEADERBOARD
+// ══════════════════════════════════════════════
+const COL='leaderboard_alabasta';
+
+async function saveScore(){
+  if(!G.name) return;
+  const chapDone=G.done.filter(Boolean).length;
+  const entry={name:G.name,score:G.totSc,chap:chapDone,date:new Date().toLocaleDateString('th-TH'),ts:Date.now()};
+  const lsKey='op_ab_lb_v2';
+  try{
+    const m=JSON.parse(localStorage.getItem(lsKey)||'{}');
+    if(!m[G.name]||m[G.name].score<G.totSc) m[G.name]=entry;
+    localStorage.setItem(lsKey,JSON.stringify(m));
+  }catch(_){}
+  if(db){
+    try{
+      const ref=db.collection(COL).doc(G.name);
+      const snap=await ref.get();
+      if(!snap.exists||snap.data().score<G.totSc) await ref.set(entry);
+    }catch(err){}
+  }
+}
+
+async function loadLB(){
+  const el=document.getElementById('lbList');
+  el.innerHTML='<div class="lb-empty">กำลังโหลด Ranking... ⏳</div>';
+  let entries=[];
+  const lsKey='op_ab_lb_v2';
+  if(db){
+    try{
+      const snap=await db.collection(COL).orderBy('score','desc').limit(20).get();
+      snap.forEach(doc=>entries.push(doc.data()));
+    }catch(err){
+      try{entries=Object.values(JSON.parse(localStorage.getItem(lsKey)||'{}'));}catch(_){}
+    }
+  } else {
+    try{entries=Object.values(JSON.parse(localStorage.getItem(lsKey)||'{}'));}catch(_){}
+  }
+  entries.sort((a,b)=>b.score-a.score);
+  if(!entries.length){
+    el.innerHTML='<div class="lb-empty">☀️ ยังไม่มีข้อมูล Ranking<br><small>เล่นจนจบด่านแรกแล้วมาดูอีกครั้ง!</small></div>';
+    return;
+  }
+  const medals=['🥇','🥈','🥉'];
+  const mapIco=['🏔️','🦕','❄️','🏜️','⚔️'];
+  el.innerHTML=entries.map((e,i)=>{
+    const me=e.name===G.name;
+    const prog=e.chap>0?`<span style="color:#9a7a4a;font-size:.7rem;margin-left:4px;">${mapIco.slice(0,e.chap).join('')}</span>`:'';
+    return`<div class="lb-row${me?' me':''}">
+      <div class="lb-rank">${medals[i]||'#'+(i+1)}</div>
+      <div class="lb-name">${me?'👤 ':''}${e.name}${prog}</div>
+      <div class="lb-sc">⭐ ${fmt(e.score)}</div>
+      <div class="lb-dt">${e.date||''}</div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+(function(){
+  // Stars
+  const c=document.getElementById('stars');
+  for(let i=0;i<55;i++){
+    const s=document.createElement('div');s.className='star';
+    const sz=Math.random()*2+1;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*55}%;animation-delay:${Math.random()*4}s;animation-duration:${2+Math.random()*3}s;`;
+    c.appendChild(s);
+  }
+  // iOS audio resume
+  document.addEventListener('touchstart',()=>{
+    try{if(mCtx&&mCtx.state==='suspended')mCtx.resume();}catch(e){}
+  },{passive:true});
+  // Resize canvas
+  window.addEventListener('resize',()=>{
+    if(document.getElementById('sg').classList.contains('on')) setTimeout(initCV,150);
+  });
+  // Enter key
+  document.getElementById('inp').addEventListener('keydown',e=>{
+    if(e.key==='Enter') startGame();
+  });
+  show('sw');
+})();
+</script>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig={
+  apiKey:"AIzaSyD8XjkPtiZZ5ru2wapUpnL2_iKu7JQhPnE",
+  authDomain:"onepiecealabastaarc.firebaseapp.com",
+  projectId:"onepiecealabastaarc",
+  storageBucket:"onepiecealabastaarc.firebasestorage.app",
+  messagingSenderId:"264988417725",
+  appId:"1:264988417725:web:99970f89924706c674a1d4"
+};
+let db=null;
+try{
+  firebase.initializeApp(firebaseConfig);
+  db=firebase.firestore();
+}catch(e){}
+</script>
+</body>
+</html>
